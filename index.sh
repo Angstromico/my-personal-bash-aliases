@@ -2,14 +2,12 @@
 
 # Commit to main repo: 
 gcp() {
-  # Colorful greeting banner
+  # Colorful banner
   echo -e "\033[1;35m🚀 Let's launch your code to GitHub!\033[0m"
-  echo -e "\033[1;36m📦 Commit type:\033[0m \033[1;33m$1\033[0m"
-  echo -e "\033[1;36m📝 Message:\033[0m \033[1;32m${*:2}\033[0m"
-  echo ""
 
+  # Check for required arguments
   if [ "$#" -lt 2 ]; then
-    echo -e "\033[1;31m❗ Usage: gcp <feat|bugfix> <commit message>\033[0m"
+    echo -e "\033[1;31m❗ Usage: gcp <feat|bugfix|chore|docs> <commit message>\033[0m"
     return 1
   fi
 
@@ -17,8 +15,32 @@ gcp() {
   shift
   MESSAGE=$*
 
-  git commit -a -m "$TYPE: $MESSAGE"
-  git push -u origin main
+  # Detect current branch
+  BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+  if [ -z "$BRANCH" ]; then
+    echo -e "\033[1;31m❌ Not inside a Git repository.\033[0m"
+    return 1
+  fi
 
-  echo -e "\n\033[1;34m✅ All done! Your changes are now live on GitHub.\033[0m"
+  echo -e "\033[1;36m📦 Branch:\033[0m \033[1;33m$BRANCH\033[0m"
+  echo -e "\033[1;36m📝 Commit type:\033[0m \033[1;33m$TYPE\033[0m"
+  echo -e "\033[1;36m💬 Message:\033[0m \033[1;32m$MESSAGE\033[0m"
+  echo ""
+
+  # Add all changes
+  git add .
+  echo -e "\033[1;34m📂 Changes staged.\033[0m"
+
+  # Commit
+  git commit -m "$TYPE: $MESSAGE" || return 1
+
+  # Pull latest changes to prevent conflicts
+  echo -e "\033[1;34m⬇️  Pulling latest changes from origin/$BRANCH...\033[0m"
+  git pull origin "$BRANCH" --rebase
+
+  # Push changes
+  echo -e "\033[1;34m⬆️  Pushing to origin/$BRANCH...\033[0m"
+  git push origin "$BRANCH"
+
+  echo -e "\n\033[1;32m✅ All done! Your code is now live on GitHub.\033[0m"
 }
