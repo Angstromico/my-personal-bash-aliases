@@ -2,28 +2,56 @@
 
 # Function to create a Python file with a standard main() template
 mkpy() {
-    # Check if a filename was provided
-    if [ -z "$1" ]; then
-        echo "Error: Please provide a filename for your Python script."
-        echo "Usage: mkpy <filename.py>"
+    # Check for required arguments
+    if [ "$#" -lt 1 ]; then
+        echo "Error: Please provide a filename or a path/filename."
+        echo "Usage 1: mkpy <filename>"
+        echo "Usage 2: mkpy <directory> <filename>"
+        echo "Usage 3: mkpy <path/to/filename>"
         return 1
     fi
 
-    # Ensure the filename ends with .py
-    if [[ "$1" != *.py ]]; then
-        FILENAME="$1.py"
+    local TARGET_DIR=""
+    local FILE_BASE=""
+
+    # --- Argument Parsing Logic ---
+
+    if [ "$#" -eq 2 ]; then
+        # Case 1: mkpy materials material
+        # The first argument is the directory, the second is the file base name.
+        TARGET_DIR="$1"
+        FILE_BASE="$2"
+    elif [ "$#" -eq 1 ]; then
+        # Case 2: mkpy example.py OR mkpy system/functions/file
+        # We use 'dirname' and 'basename' to split the path/file argument.
+        TARGET_DIR=$(dirname "$1")
+        FILE_BASE=$(basename "$1")
+    fi
+
+    # 1. Ensure the filename ends with .py
+    if [[ "$FILE_BASE" != *.py ]]; then
+        FILE_NAME_WITH_EXT="${FILE_BASE}.py"
     else
-        FILENAME="$1"
+        FILE_NAME_WITH_EXT="$FILE_BASE"
     fi
 
-    # Check if the file already exists
-    if [ -f "$FILENAME" ]; then
-        echo "Error: File '$FILENAME' already exists."
+    # 2. Define the final complete path
+    FINAL_PATH="$TARGET_DIR/$FILE_NAME_WITH_EXT"
+
+    # 3. Create the directory path if it doesn't exist (the -p flag handles nested directories)
+    if [ ! -d "$TARGET_DIR" ]; then
+        echo "Creating directory: $TARGET_DIR"
+        mkdir -p "$TARGET_DIR"
+    fi
+
+    # 4. Check if the final file already exists
+    if [ -f "$FINAL_PATH" ]; then
+        echo "Error: File '$FINAL_PATH' already exists."
         return 1
     fi
 
-    # Use 'cat' with a heredoc (<< EOF) to write the content
-    cat << EOF > "$FILENAME"
+    # 5. Use 'cat' with a heredoc (<< EOF) to write the content
+    cat << EOF > "$FINAL_PATH"
 def main(): 
     print("Hello Main!")
 
@@ -32,6 +60,9 @@ if __name__ == "__main__":
     main()
 EOF
 
-    echo "✅ Created Python file: $FILENAME"
-    code "$FILENAME" # Open the new file directly in VS Code (optional)
+    echo "✅ Created Python file: $FINAL_PATH"
+    # Open the file in VS Code if the 'code' command is available
+    if command -v code >/dev/null 2>&1; then
+        code "$FINAL_PATH"
+    fi
 }
