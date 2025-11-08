@@ -84,10 +84,16 @@ This is the first personal alias I’ve created and decided to keep. As I contin
 
 To keep this repository clean and highly organized, all aliases and functions will be grouped by the technology they target. This modular approach makes it easy to source only the specific aliases you need.
 
-- git-aliases.sh: Contains all Git-related aliases and functions (e.g., gcp).
+- git-functions.sh: Contains all Git-related functions and functions (e.g., gcp).
 
-- python-aliases.sh: Will contain functions like `mkpy` and any future Python-related shell commands.
+- python-functions.sh: Will contain functions like `mkpy` and any future Python-related shell commands.
 
-- docker-aliases.sh: Reserved for future Docker and container utility functions.
+- docker-functions.sh: Reserved for future Docker and container utility functions.
+
+```bash
+git-functions.sh      # Contains all Git-related aliases (e.g., gcp)
+python-functions.sh   # Contains mkpy, python(), and future Python utilities
+docker-functions.sh   # Reserved for Docker and container utility functions
+```
 
 Stay tuned!
