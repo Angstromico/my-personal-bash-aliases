@@ -36,7 +36,7 @@ mkpy setup.py
 
 The `python` function allows me to went from this `python3 magic.py` to `python magic`.
 
-```
+```bash
  python() {
     # Check if any arguments were provided
     if [ $# -eq 0 ]; then
