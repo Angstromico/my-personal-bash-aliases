@@ -1,6 +1,6 @@
-# 🛠️ My Personal Bash Aliases
+# 🛠️ My Personal Shell Aliases
 
-This repository is a collection of my personal Bash aliases and functions that help streamline my development workflow. It starts with a simple but powerful alias for Git commits and pushes.
+This repository is a collection of my personal Shell functions and functions that help streamline my development workflow. It starts with a simple but powerful alias for Git commits and pushes.
 
 ## 🚀 Alias: `gcp`
 
@@ -30,6 +30,42 @@ mkpy calculator_script
 
 mkpy setup.py
 # Creates setup.py with the template (since it already ends in .py)
+```
+
+## 🐍 Alias: python
+
+The `python` function allows me to went from this `python3 magic.py` to `python magic`.
+
+```
+ python() {
+    # Check if any arguments were provided
+    if [ $# -eq 0 ]; then
+        echo "Usage: python <filename> [args...]"
+        return 1
+    fi
+
+    local FILE="$1"
+    local ARGS="${@:2}"  # Get all arguments except the first one
+
+    # If the file doesn't have .py extension, try adding it
+    if [[ "$FILE" != *.py ]]; then
+        FILE="$FILE.py"
+    fi
+
+    # Check if the file exists
+    if [ ! -f "$FILE" ]; then
+        echo "Error: File '$FILE' not found."
+        return 1
+    fi
+
+    # Execute the Python file with python3
+    python3 "$FILE" $ARGS
+ }
+
+ python script         # Runs script.py
+ python script arg1    # Runs script.py with argument 'arg1'
+ python setup.py       # Runs setup.py directly
+
 ```
 
 ## 📌 Why This Repo Exists

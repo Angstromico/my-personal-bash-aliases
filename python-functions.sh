@@ -66,3 +66,28 @@ EOF
         code "$FINAL_PATH"
     fi
 }
+
+python() {
+    # Check if any arguments were provided
+    if [ $# -eq 0 ]; then
+        echo "Usage: python <filename> [args...]"
+        return 1
+    fi
+
+    local FILE="$1"
+    local ARGS="${@:2}"  # Get all arguments except the first one
+
+    # If the file doesn't have .py extension, try adding it
+    if [[ "$FILE" != *.py ]]; then
+        FILE="$FILE.py"
+    fi
+
+    # Check if the file exists
+    if [ ! -f "$FILE" ]; then
+        echo "Error: File '$FILE' not found."
+        return 1
+    fi
+
+    # Execute the Python file with python3
+    python3 "$FILE" $ARGS
+}
