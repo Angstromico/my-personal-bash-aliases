@@ -109,4 +109,12 @@ docker-functions.sh   # Reserved for Docker and container utility functions
 xampp-aliases.sh      # Reserved for xampp
 ```
 
+### Additional Note 🤓:
+
+```bash
+    # Use this command after you put one of this functions or aliases in your terminal
+
+    source ~/.bashrc # Adjust to the real direction if you have to.
+```
+
 Stay tuned!
