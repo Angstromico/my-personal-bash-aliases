@@ -68,7 +68,7 @@ The `python` function allows me to went from this `python3 magic.py` to `python 
 
 ```
 
-## 🐍 Alias: xampp
+## 🐘 Alias: xampp
 
 ```bash
     alias xampp='sudo /opt/lampp/lampp'
