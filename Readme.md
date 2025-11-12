@@ -68,6 +68,13 @@ The `python` function allows me to went from this `python3 magic.py` to `python 
 
 ```
 
+## 🐍 Alias: xampp
+
+```bash
+    alias xampp='sudo /opt/lampp/lampp'
+
+```
+
 ## 📌 Why This Repo Exists
 
 This is the first personal alias I’ve created and decided to keep. As I continue to refine my workflow and discover other useful aliases, I’ll be uploading them here gradually.
