@@ -73,6 +73,9 @@ The `python` function allows me to went from this `python3 magic.py` to `python 
 ```bash
     alias xampp='sudo /opt/lampp/lampp'
 
+    xampp start
+    xampp restart
+    xampp stop
 ```
 
 ## 📌 Why This Repo Exists
