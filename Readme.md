@@ -100,10 +100,13 @@ To keep this repository clean and highly organized, all aliases and functions wi
 
 - docker-functions.sh: Reserved for future Docker and container utility functions.
 
+- xampp-aliases.sh: Contains the xampp commands
+
 ```bash
 git-functions.sh      # Contains all Git-related aliases (e.g., gcp)
 python-functions.sh   # Contains mkpy, python(), and future Python utilities
 docker-functions.sh   # Reserved for Docker and container utility functions
+xampp-aliases.sh      # Reserved for xampp
 ```
 
 Stay tuned!
