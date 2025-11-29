@@ -118,3 +118,41 @@ xampp-aliases.sh      # Reserved for xampp
 ```
 
 Stay tuned!
+
+## How to Add Any Custom Function/Command to Fish Shell (Universal Guide)
+
+Fish makes it extremely easy to create your own permanent terminal commands (functions/aliases).
+
+### 1. The Golden Rule
+Every file inside this folder automatically becomes a command:
+
+```bash
+    ~/.config/fish/functions/
+```
+
+
+→ File name = command name  
+→ File contents = function code
+
+### 2. Create a new command (example: `hello`)
+
+```fish
+nano ~/.config/fish/functions/hello.fish
+
+function hello
+    echo "Hello $argv from Fish!"
+end
+
+Save: Ctrl+O → Enter → Ctrl+X
+```
+
+### 3. Make it active
+
+Choose one of these (they all work):
+
+```fish
+exec fish                    # fastest – replaces current shell
+# OR
+source ~/.config/fish/config.fish   # reloads everything
+# OR simply open a new terminal tab/window
+```
