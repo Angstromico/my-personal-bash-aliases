@@ -81,3 +81,24 @@ function gcp
 
     echo -e "\n\033[1;32m✅ All done! Your code is now live on GitHub.\033[0m"
 end
+
+# Initialize a new Git repo and push to GitHub
+git_init_push() {
+  if [ "$#" -lt 1 ]; then
+    echo -e "\033[1;31m❗ Usage: git_init_push <remote-url>\033[0m"
+    return 1
+  fi
+
+  REMOTE_URL=$1
+
+  echo -e "\033[1;35m🚀 Initializing new Git repository...\033[0m"
+
+  git init
+  git add README.md
+  git commit -m "first commit"
+  git branch -M main
+  git remote add origin "$REMOTE_URL"
+  git push -u origin main
+
+  echo -e "\n\033[1;32m✅ Repository initialized and pushed to $REMOTE_URL\033[0m"
+}
