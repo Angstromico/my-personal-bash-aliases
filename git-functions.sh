@@ -94,7 +94,6 @@ git_init_push() {
   echo -e "\033[1;35m🚀 Initializing new Git repository...\033[0m"
 
   git init
-  git add README.md
   git add .
   git commit -m "first commit"
   git branch -M main
