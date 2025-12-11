@@ -7,7 +7,7 @@ gcp() {
 
   # Check for required arguments
   if [ "$#" -lt 2 ]; then
-    echo -e "\033[1;31m❗ Usage: gcp <feat|bugfix|chore|docs> <commit message>\033[0m"
+    echo -e "\033[1;31m❗ Usage: gcp <feat|bugfix|chore|docs|refactor> <commit message>\033[0m"
     return 1
   fi
 
@@ -45,13 +45,13 @@ gcp() {
   echo -e "\n\033[1;32m✅ All done! Your code is now live on GitHub.\033[0m"
 }
 
-# === XAMPP Aliases (CachyOS) ===
+# === GCP (CachyOS) ===
 
 function gcp
     echo -e "\033[1;35m🚀 Let's launch your code to GitHub!\033[0m"
 
     if test (count $argv) -lt 2
-        echo -e "\033[1;31m❗ Usage: gcp <feat|bugfix|chore|docs> <commit message>\033[0m"
+        echo -e "\033[1;31m❗ Usage: gcp <feat|bugfix|chore|docs|refactor> <commit message>\033[0m"
         return 1
     end
 
