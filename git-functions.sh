@@ -102,3 +102,35 @@ git_init_push() {
 
   echo -e "\n\033[1;32m✅ Repository initialized and pushed to $REMOTE_URL\033[0m"
 }
+
+## Create Git SSH Key
+generate_ssh_key() {
+  if [ "$#" -lt 1 ]; then
+    echo -e "\033[1;31m❗ Usage: generate_ssh_key <email>\033[0m"
+    return 1
+  fi
+
+  EMAIL=$1
+  KEY_PATH=~/.ssh/id_ed25519_"$EMAIL"
+
+  echo -e "\033[1;35m🚀 Generating new SSH key...\033[0m"
+  ssh-keygen -t ed25519 -C "$EMAIL" -f "$KEY_PATH" -N ""
+
+  echo -e "\033[1;34m🔑 Adding key to ssh-agent...\033[0m"
+  if ! pgrep -u "$USER" ssh-agent > /dev/null; then
+    eval "$(ssh-agent -s)"
+  fi
+  ssh-add "$KEY_PATH"
+
+  echo -e "\033[1;34m📋 Copying public key to clipboard...\033[0m"
+  if command -v xclip &> /dev/null; then
+    cat "$KEY_PATH.pub" | xclip -selection clipboard
+  elif command -v wl-copy &> /dev/null; then
+    cat "$KEY_PATH.pub" | wl-copy
+  else
+    echo -e "\033[1;33m⚠️ Neither xclip nor wl-copy found. Copy manually:\033[0m"
+    cat "$KEY_PATH.pub"
+  fi
+
+  echo -e "\n\033[1;32m✅ SSH key generated and added to ssh-agent.\033[0m"
+}
