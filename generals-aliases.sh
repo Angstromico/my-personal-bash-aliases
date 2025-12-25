@@ -1,0 +1,1 @@
+alias resetbash="source ~/.bashrc"
