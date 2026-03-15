@@ -28,18 +28,20 @@ mkpy() {
         FILE_BASE=$(basename "$1")
     fi
 
-    # 1. Ensure the filename ends with .py
-    if [[ "$FILE_BASE" != *.py ]]; then
-        FILE_NAME_WITH_EXT="${FILE_BASE}.py"
-    else
-        FILE_NAME_WITH_EXT="$FILE_BASE"
-    fi
+    # 1. Ensure the filename ends with .py and get clean function name
+    local CLEAN_NAME="${FILE_BASE%.py}"
+    local FILE_NAME_WITH_EXT="${CLEAN_NAME}.py"
 
     # 2. Define the final complete path
-    FINAL_PATH="$TARGET_DIR/$FILE_NAME_WITH_EXT"
+    local FINAL_PATH=""
+    if [ "$TARGET_DIR" = "." ]; then
+        FINAL_PATH="$FILE_NAME_WITH_EXT"
+    else
+        FINAL_PATH="$TARGET_DIR/$FILE_NAME_WITH_EXT"
+    fi
 
     # 3. Create the directory path if it doesn't exist (the -p flag handles nested directories)
-    if [ ! -d "$TARGET_DIR" ]; then
+    if [ ! -d "$TARGET_DIR" ] && [ "$TARGET_DIR" != "." ]; then
         echo "Creating directory: $TARGET_DIR"
         mkdir -p "$TARGET_DIR"
     fi
@@ -52,15 +54,16 @@ mkpy() {
 
     # 5. Use 'cat' with a heredoc (<< EOF) to write the content
     cat << EOF > "$FINAL_PATH"
-def main(): 
-    print("Hello Main!")
+def ${CLEAN_NAME}(): 
+    print("Hello from ${CLEAN_NAME}!")
 
 
 if __name__ == "__main__":
-    main()
+    ${CLEAN_NAME}()
 EOF
 
-    echo "✅ Created Python file: $FINAL_PATH"
+    echo "✅ Created Python file: $FINAL_PATH (Function: ${CLEAN_NAME})"
+    
     # Open the file in VS Code if the 'code' command is available
     if command -v code >/dev/null 2>&1; then
         code "$FINAL_PATH"
