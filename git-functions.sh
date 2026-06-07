@@ -134,3 +134,54 @@ generate_ssh_key() {
 
   echo -e "\n\033[1;32m✅ SSH key generated and added to ssh-agent.\033[0m"
 }
+
+invoke_git_hard_reset() {
+    # 1. Default values for remote and branch
+    local remote="${1:-origin}"
+    local branch="${2:-main}"
+
+    local color_magenta="\033[1;35m"
+    local color_blue="\033[1;34m"
+    local color_green="\033[1;32m"
+    local color_red="\033[1;31m"
+    local color_reset="\033[0m"
+
+    # 2. Validate if Git is installed (command -v git)
+    if ! command -v git &> /dev/null; then
+        echo -e "${color_red}Error: Git is not installed or not in PATH.${color_reset}" >&2
+        return 1
+    fi
+
+    # 3. Validate if we are inside a Git repository (git rev-parse --abrev-ref HEAD)
+    local current_branch
+    current_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+    if [ -z "$current_branch" ]; then
+        echo -e "${color_red}Error: Not inside a Git repository.${color_reset}" >&2
+        return 1
+    fi
+
+    echo -e "${color_magenta}Resetting current branch to $remote/$branch...${color_reset}"
+    echo ""
+
+    # 4. Make sure to fetch the latest changes from the remote (git fetch)
+    echo -e "${color_blue}Fetching latest changes from $remote...${color_reset}"
+    git fetch "$remote"
+
+    # Validate the exit code of the last operation ($?)
+    if [ $? -ne 0 ]; then
+        echo -e "${color_red}Error: Failed to fetch from $remote.${color_reset}" >&2
+        return 1
+    fi
+
+    # 5. Make the hard reset (git reset --hard)
+    echo -e "${color_blue}Performing hard reset to $remote/$branch...${color_reset}"
+    git reset --hard "$remote/$branch"
+
+    if [ $? -ne 0 ]; then
+        echo -e "${color_red}Error: Failed to reset to $remote/$branch. Ensure the branch exists on the remote.${color_reset}" >&2
+        return 1
+    fi
+
+    echo ""
+    echo -e "${color_green}✅ Successfully reset to $remote/$branch.${color_reset}"
+}
