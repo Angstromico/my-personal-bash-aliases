@@ -1,158 +1,48 @@
 # 🛠️ My Personal Shell Aliases
 
-This repository is a collection of my personal Shell functions and functions that help streamline my development workflow. It starts with a simple but powerful alias for Git commits and pushes.
-
-## 🚀 Alias: `gcp`
-
-The `gcp` function allows me to quickly commit and push changes to GitHub with a formatted message. It supports commit types like `feat` and `bugfix`, and lets me write custom messages on the fly.
-
-### 📄 Usage
-
-```bash
-gcp feat "add login functionality"
-gcp bugfix "fix null pointer exception"
-```
-
-## 🐍 Alias: mkpy
-
-The `mkpy` function is a productivity hack designed specifically for Python development. It creates a new Python file `(.py)` in your current directory, automatically populating it with a best-practice template.
-
-This saves you the time of creating the file manually and typing out the standard Python entry point.
-
-```bash
-mkpy calculator_script
-# Creates calculator_script.py with the template:
-# def main():
-#     print("Hello Main!")
-#
-# if __name__ == "__main__":
-#     main()
-
-mkpy setup.py
-# Creates setup.py with the template (since it already ends in .py)
-```
-
-## 🐍 Alias: python
-
-The `python` function allows me to went from this `python3 magic.py` to `python magic`.
-
-```shell
- python() {
-    # Check if any arguments were provided
-    if [ $# -eq 0 ]; then
-        echo "Usage: python <filename> [args...]"
-        return 1
-    fi
-
-    local FILE="$1"
-    local ARGS="${@:2}"  # Get all arguments except the first one
-
-    # If the file doesn't have .py extension, try adding it
-    if [[ "$FILE" != *.py ]]; then
-        FILE="$FILE.py"
-    fi
-
-    # Check if the file exists
-    if [ ! -f "$FILE" ]; then
-        echo "Error: File '$FILE' not found."
-        return 1
-    fi
-
-    # Execute the Python file with python3
-    python3 "$FILE" $ARGS
- }
-
- python script         # Runs script.py
- python script arg1    # Runs script.py with argument 'arg1'
- python setup.py       # Runs setup.py directly
-
-```
-
-## 🐘 Alias: xampp
-
-```bash
-    alias xampp='sudo /opt/lampp/lampp'
-
-    xampp start
-    xampp restart
-    xampp stop
-```
+This repository is a collection of my personal Shell functions and aliases that help streamline my development workflow. It includes utilities for Git, Python, Docker, Java, PHP, and more.
 
 ## 📌 Why This Repo Exists
 
-This is the first personal alias I’ve created and decided to keep. As I continue to refine my workflow and discover other useful aliases, I’ll be uploading them here gradually.
+This project started as a way to keep track of my most used commands and automate repetitive tasks. As I continue to refine my workflow, I’ll be uploading new aliases and functions here.
 
-## 🗂️ Future Plans
+## 📂 Documentation
 
-- Add aliases for Docker, Python, and system utilities
+Detailed documentation for each category of aliases and functions can be found in the `docs/` folder:
 
-- Include setup instructions for sourcing these aliases
+- [🐙 Git Functions](docs/git-functions.md) - `gcp`, `git_init_push`, `generate_ssh_key`, etc.
+- [🐍 Python Functions](docs/python-functions.md) - `mkpy`, `python`, `setup_pyenv`.
+- [🐳 Docker Aliases](docs/docker-aliases.md) - `docker-start-img`.
+- [☕ Java Functions](docs/java-functions.md) - `runjava`, `makejava`.
+- [🐘 PHP Functions](docs/php-functions.md) - `mkphp`.
+- [🖖 Vue Functions](docs/vue-functions.md) - `vbase`.
+- [🏥 XAMPP Aliases](docs/xampp-aliases.md) - `xampp`, `xstart`, `xstop`, etc.
+- [🚀 Postman Aliases](docs/postman-aliases.md) - `postman`.
+- [⚙️ General Aliases](docs/generals-aliases.md) - `resetbash`.
 
-- Share tips and tricks for shell productivity
+## 🚀 Getting Started
 
-## 📂 Repository File Structure
-
-To keep this repository clean and highly organized, all aliases and functions will be grouped by the technology they target. This modular approach makes it easy to source only the specific aliases you need.
-
-- git-functions.sh: Contains all Git-related functions and functions (e.g., gcp).
-
-- python-functions.sh: Will contain functions like `mkpy` and any future Python-related shell commands.
-
-- docker-functions.sh: Reserved for future Docker and container utility functions.
-
-- xampp-aliases.sh: Contains the xampp commands
+To use these aliases, you can source the files in your `.bashrc` or `.zshrc`:
 
 ```bash
-git-functions.sh      # Contains all Git-related aliases (e.g., gcp)
-python-functions.sh   # Contains mkpy, python(), and future Python utilities
-docker-functions.sh   # Reserved for Docker and container utility functions
-xampp-aliases.sh      # Reserved for xampp
+# Example: Source all .sh files in the repository
+for file in ~/path/to/Bash-Aliases/*.sh; do
+    source "$file"
+done
 ```
 
-### Additional Note 🤓:
+After updating your configuration file, reload your shell:
 
 ```bash
-    # Use this command after you put one of this functions or aliases in your terminal
-
-    source ~/.bashrc # Adjust to the real direction if you have to.
+source ~/.bashrc # or source ~/.zshrc
 ```
 
-Stay tuned!
+## 🐠 Fish Shell Support
 
-## How to Add Any Custom Function/Command to Fish Shell (Universal Guide)
+Fish makes it extremely easy to create your own permanent terminal commands. See the [XAMPP docs](docs/xampp-aliases.md) or [PHP docs](docs/php-functions.md) for examples of Fish-specific functions.
 
-Fish makes it extremely easy to create your own permanent terminal commands (functions/aliases).
+Every file inside `~/.config/fish/functions/` automatically becomes a command:
+- File name = command name
+- File contents = function code
 
-### 1. The Golden Rule
-Every file inside this folder automatically becomes a command:
-
-```bash
-    ~/.config/fish/functions/
-```
-
-
-→ File name = command name  
-→ File contents = function code
-
-### 2. Create a new command (example: `hello`)
-
-```fish
-nano ~/.config/fish/functions/hello.fish
-
-function hello
-    echo "Hello $argv from Fish!"
-end
-
-Save: Ctrl+O → Enter → Ctrl+X
-```
-
-### 3. Make it active
-
-Choose one of these (they all work):
-
-```fish
-exec fish                    # fastest – replaces current shell
-# OR
-source ~/.config/fish/config.fish   # reloads everything
-# OR simply open a new terminal tab/window
-```
+Stay tuned for more updates!
