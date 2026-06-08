@@ -52,3 +52,16 @@ invoke_git_hard_reset [remote] [branch]
 ```
 - `remote`: Default is `origin`.
 - `branch`: Default is `main`.
+
+---
+
+## `git_rebase_branch`
+
+Fetch the latest changes from a base branch and rebase the specified branch onto it.
+
+### Usage
+```bash
+git_rebase_branch [branch] [base_branch]
+```
+- `branch`: The branch you want to rebase. Default is the **current branch**.
+- `base_branch`: The branch to rebase onto. Default is `main`.

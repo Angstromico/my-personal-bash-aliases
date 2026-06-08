@@ -185,3 +185,38 @@ invoke_git_hard_reset() {
     echo ""
     echo -e "${color_green}✅ Successfully reset to $remote/$branch.${color_reset}"
 }
+
+git_rebase_branch() {
+  local current_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+  local branch="${1:-$current_branch}"
+  local base="${2:-main}"
+
+  local color_magenta="\033[1;35m"
+  local color_blue="\033[1;34m"
+  local color_green="\033[1;32m"
+  local color_red="\033[1;31m"
+  local color_reset="\033[0m"
+
+  if [ -z "$branch" ]; then
+    echo -e "${color_red}❗ Error: Could not detect current branch and no branch provided.${color_reset}"
+    echo -e "${color_red}Usage: git_rebase_branch [branch] [base_branch (default: main)]${color_reset}"
+    return 1
+  fi
+
+  echo -e "${color_magenta}🚀 Rebasing $branch onto $base...${color_reset}"
+
+  echo -e "${color_blue}Fetching latest changes from origin/$base...${color_reset}"
+  git fetch origin "$base"
+  
+  echo -e "${color_blue}Switching to branch $branch...${color_reset}"
+  git checkout "$branch" || return 1
+
+  echo -e "${color_blue}Performing rebase onto origin/$base...${color_reset}"
+  git rebase "origin/$base"
+  
+  if [ $? -eq 0 ]; then
+    echo -e "\n${color_green}✅ Successfully rebased $branch onto origin/$base.${color_reset}"
+  else
+    echo -e "\n${color_red}❌ Rebase failed. Please resolve conflicts manually.${color_reset}"
+  fi
+}
