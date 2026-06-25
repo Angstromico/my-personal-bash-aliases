@@ -220,3 +220,30 @@ git_rebase_branch() {
     echo -e "\n${color_red}❌ Rebase failed. Please resolve conflicts manually.${color_reset}"
   fi
 }
+
+go-branch() {
+    # Verify that we are inside a Git repository
+    if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+        echo -e "\e[31mError: Not inside a Git repository.\e[0m"
+        return 1
+    fi
+
+    # Verify that a branch name was provided
+    if [ -z "$1" ]; then
+        echo -e "\e[33mUsage: go-branch <branch-name>\e[0m"
+        return 1
+    fi
+
+    local target_branch="$1"
+
+    echo -e "\e[34m🔄 Update reference from origin...\e[0m"
+    git fetch origin --prune
+
+    echo -e "\e[34m🌿 Try to switch to local branch '$target_branch'...\e[0m"
+    if git checkout "$target_branch"; then
+        echo -e "\e[32m✅ Successfully switched to branch '$target_branch'.\e[0m"
+    else
+        echo -e "\e[31m❌ Error: The branch '$target_branch' does not exist locally or on origin.\e[0m"
+        return 1
+    fi
+}
