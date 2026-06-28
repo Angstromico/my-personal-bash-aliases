@@ -19,3 +19,22 @@ checkport <port>
 ```bash
 checkport 3000
 ```
+
+## `addbash`
+
+Append a block of code, script, or alias directly to your `~/.bashrc` and reload the shell configuration.
+
+### Usage
+
+```bash
+addbash "<code>"
+```
+
+- `code`: The block of code, alias definition, or command you want to append.
+
+### Example
+
+```bash
+addbash "alias ll='ls -la'"
+```
+
