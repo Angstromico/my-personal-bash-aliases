@@ -10,3 +10,13 @@ Reloads the `.bashrc` configuration.
 ```bash
 resetbash
 ```
+
+## `c`
+
+Clears the terminal screen. A quick shorthand for the standard `clear` command.
+
+### Usage
+```bash
+c
+```
+

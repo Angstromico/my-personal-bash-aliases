@@ -18,7 +18,7 @@ Detailed documentation for each category of aliases and functions can be found i
 - [🖖 Vue Functions](docs/vue-functions.md) - `vbase`.
 - [🏥 XAMPP Aliases](docs/xampp-aliases.md) - `xampp`, `xstart`, `xstop`, etc.
 - [🚀 Postman Aliases](docs/postman-aliases.md) - `postman`.
-- [⚙️ General Aliases](docs/generals-aliases.md) - `resetbash`.
+- [⚙️ General Aliases](docs/generals-aliases.md) - `resetbash`, `c`.
 - [⚙️ General Functions](docs/general-functions.md) - `checkport`, `addbash`.
 
 ## 🚀 Getting Started
