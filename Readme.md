@@ -19,6 +19,7 @@ Detailed documentation for each category of aliases and functions can be found i
 - [🏥 XAMPP Aliases](docs/xampp-aliases.md) - `xampp`, `xstart`, `xstop`, etc.
 - [🚀 Postman Aliases](docs/postman-aliases.md) - `postman`.
 - [⚙️ General Aliases](docs/generals-aliases.md) - `resetbash`.
+- [⚙️ General Functions](docs/general-functions.md) - `checkport`.
 
 ## 🚀 Getting Started
 
