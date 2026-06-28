@@ -12,7 +12,7 @@ Detailed documentation for each category of aliases and functions can be found i
 
 - [🐙 Git Functions](docs/git-functions.md) - `gcp`, `git_init_push`, `generate_ssh_key`, etc.
 - [🐍 Python Functions](docs/python-functions.md) - `mkpy`, `python`, `setup_pyenv`.
-- [🐳 Docker Aliases](docs/docker-aliases.md) - `docker-start-img`.
+- [🐳 Docker Aliases](docs/docker-aliases.md) - `docker-start-img`, `checkdockport`.
 - [☕ Java Functions](docs/java-functions.md) - `runjava`, `makejava`.
 - [🐘 PHP Functions](docs/php-functions.md) - `mkphp`.
 - [🖖 Vue Functions](docs/vue-functions.md) - `vbase`.
